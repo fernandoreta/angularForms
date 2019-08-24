@@ -6,8 +6,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { FormsComponent } from './forms/forms.component';
 import { ServicesComponentComponent } from './services-component/services-component.component';
+import { AuthComponent } from './auth/auth.component';
 
 const appRoutes: Routes = [
+  { path: 'auth',
+    component: AuthComponent
+  },
   { path: 'app-forms',
     component: FormsComponent
   },
@@ -20,7 +24,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     FormsComponent,
-    ServicesComponentComponent
+    ServicesComponentComponent,
+    AuthComponent
   ],
   imports: [
     RouterModule.forRoot(
