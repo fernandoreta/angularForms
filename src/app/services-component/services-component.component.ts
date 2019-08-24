@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MyBabyServiceService } from '../services/my-baby-service.service';
 
 @Component({
   selector: 'app-services-component',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServicesComponentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private bbyServ: MyBabyServiceService) { }
 
   ngOnInit() {
+    this.bbyServ.print();
   }
 
 }
