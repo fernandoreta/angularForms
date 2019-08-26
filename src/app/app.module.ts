@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FormsComponent } from './forms/forms.component';
 import { ServicesComponentComponent } from './services-component/services-component.component';
 import { AuthComponent } from './auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: 'app-auth',
@@ -34,7 +35,7 @@ const appRoutes: Routes = [
     ),
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
