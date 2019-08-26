@@ -1,8 +1,35 @@
 <div class="container">
-  <form>
-    <label for="email">Email</label>
-    <input type="email">
-    <label for="password">Password</label>
-    <input type="password">
+  <form #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input 
+      type="email"
+      class="form-control"
+      required
+      name="email"
+      email
+      ngModel
+      >
+      <label for="password">Password</label>
+      <input 
+      type="password"
+      class="form-control"
+      required
+      name="password"
+      password
+      ngModel
+      minlength="6"
+      >
+      <button type="submit" 
+      class="btn btn-primary"
+      [disabled]="!myForm.valid"
+      >
+      {{ isLoginMode ? 'Login' : 'Sign Up' }}
+    </button>
+      
+      <button type="submit" class="btn btn-primary" 
+      (click)="switchToLogin()"
+      >Switch to {{ isLoginMode ? 'Sign Up' : 'Login' }}</button>
+    </div>
   </form>
 </div>

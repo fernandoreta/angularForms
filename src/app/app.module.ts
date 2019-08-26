@@ -9,7 +9,7 @@ import { ServicesComponentComponent } from './services-component/services-compon
 import { AuthComponent } from './auth/auth.component';
 
 const appRoutes: Routes = [
-  { path: 'auth',
+  { path: 'app-auth',
     component: AuthComponent
   },
   { path: 'app-forms',

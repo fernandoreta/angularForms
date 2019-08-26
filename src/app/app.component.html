@@ -1,9 +1,9 @@
 <h1>Angular Router</h1>
-<nav>
-  <a routerLink="/app-forms" routerLinkActive="active">Forms</a>
-</nav>
-<nav>
-  <a routerLink="/app-services-component" routerLinkActive="active">Services</a>
-</nav>
+
+<ul class="nav navbar-nav">
+  <li routerLinkActive="active"><a routerLink="/app-forms">Forms</a></li>
+  <li routerLinkActive="active"><a routerLink="/app-services-component">Services</a></li>
+  <li routerLinkActive="active"><a routerLink="/app-auth">Auth</a></li>
+</ul>
 
 <router-outlet></router-outlet>
