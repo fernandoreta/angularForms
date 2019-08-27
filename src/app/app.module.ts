@@ -8,6 +8,7 @@ import { FormsComponent } from './forms/forms.component';
 import { ServicesComponentComponent } from './services-component/services-component.component';
 import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 const appRoutes: Routes = [
   { path: 'app-auth',
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
     AppComponent,
     FormsComponent,
     ServicesComponentComponent,
-    AuthComponent
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     RouterModule.forRoot(
