@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, onErrorResumeNext } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { catchError, onErrorResumeNext, tap } from 'rxjs/operators';
+import { throwError, Subject } from 'rxjs';
+import { User } from './user.model';
 
 export interface AuthResponseData {
     idToken: string;
@@ -18,6 +19,7 @@ export interface AuthResponseData {
 export class AuthService {
 
     constructor(private http: HttpClient) { }
+    user = new Subject<User>();
 
     signUp(email: string, password: string) {
         return this.http.post<AuthResponseData>(
@@ -27,7 +29,14 @@ export class AuthService {
             password: password,
             returnSecureToken: true
         }
-        ).pipe(catchError(this.handleError));
+        ).pipe(catchError(this.handleError),
+        tap(resData => {
+            this.handleAuthentication(
+                resData.email,
+                resData.localId,
+                resData.idToken,
+                +resData.expiresIn);
+        }));
     }
 
     /**Diffretn path for login same API KEY */
@@ -38,7 +47,21 @@ export class AuthService {
             email: email,
             password: password,
             returnSecureToken: true
-        }).pipe(catchError(this.handleError));
+        }).pipe(catchError(this.handleError),
+        tap(resData => {
+            this.handleAuthentication(
+                resData.email,
+                resData.localId,
+                resData.idToken,
+                +resData.expiresIn);
+        }));
+    }
+
+    private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
+        const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
+            const user = new User(email, userId, token, expirationDate);
+            // Emit to this user in this application
+            this.user.next(user);
     }
 
     private handleError(errorRes: HttpErrorResponse) {
