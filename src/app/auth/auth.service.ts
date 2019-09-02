@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, onErrorResumeNext } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -27,17 +27,7 @@ export class AuthService {
             password: password,
             returnSecureToken: true
         }
-        ).pipe(catchError(errorRes => {
-            /** Catching the error on a service with PIPE*/
-            const errorMessage = 'An error ocurred!';
-            if (!errorRes.error || !errorRes.error.error) {
-                return throwError(errorMessage);
-            }
-            switch (errorRes.error.error.message) {
-                case 'EMAIL_EXISTS':
-                  return throwError('Email already exists!');
-              }
-        }));
+        ).pipe(catchError(this.handleError));
     }
 
     /**Diffretn path for login same API KEY */
@@ -48,6 +38,25 @@ export class AuthService {
             email: email,
             password: password,
             returnSecureToken: true
-        });
+        }).pipe(catchError(this.handleError));
+    }
+
+    private handleError(errorRes: HttpErrorResponse) {
+            /** Catching the error on a service with PIPE*/
+            const errorMessage = 'An error ocurred!';
+            if (!errorRes.error || !errorRes.error.error) {
+                return throwError(errorMessage);
+            }
+            switch (errorRes.error.error.message) {
+                case 'EMAIL_EXISTS':
+                    return throwError('Email already exists!');
+                  break;
+                case 'INVALID_PASSWORD':
+                    return throwError('Invalid password');
+                  break;
+                case 'USER_DISABLED':
+                    return throwError('User is disabled!');
+                  break;
+              }
     }
 }
