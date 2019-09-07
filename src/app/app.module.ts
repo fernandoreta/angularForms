@@ -10,6 +10,7 @@ import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ObsComponent } from './obs/obs.component';
+import { InfoComponent } from './info/info.component';
 
 const appRoutes: Routes = [
   { path: 'app-auth',
@@ -23,6 +24,9 @@ const appRoutes: Routes = [
   },
   { path: 'app-obs',
     component: ObsComponent
+  },
+  { path: 'app-info',
+    component: InfoComponent
   }
 ];
 
@@ -33,7 +37,8 @@ const appRoutes: Routes = [
     ServicesComponentComponent,
     AuthComponent,
     LoadingSpinnerComponent,
-    ObsComponent
+    ObsComponent,
+    InfoComponent
   ],
   imports: [
     RouterModule.forRoot(
