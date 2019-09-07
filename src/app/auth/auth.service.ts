@@ -73,13 +73,13 @@ export class AuthService {
             switch (errorRes.error.error.message) {
                 case 'EMAIL_EXISTS':
                     return throwError('Email already exists!');
-                  break;
+                 // break;
                 case 'INVALID_PASSWORD':
                     return throwError('Invalid password');
-                  break;
+                  // break;
                 case 'USER_DISABLED':
                     return throwError('User is disabled!');
-                  break;
+                // break;
               }
     }
 }
