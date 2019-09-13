@@ -21,4 +21,16 @@
         <button class="btn btn-primary" type="submit">Send Form</button>
       </form>
     </div>
-</div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <h3 *ngIf="loadedPost.length < 1">No content already</h3>
+      <ul class="list-group" *ngIf="loadedPost.length >= 1">
+        <li class="list-group-item" *ngFor="let item of loadedPost">
+          {{ item.title }}
+          {{ item.content }}
+        </li>
+      </ul>
+    </div>
+  </div>

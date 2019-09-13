@@ -13,6 +13,8 @@ export class InfoComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  loadedPost: Post[] = [];
+
   submitForm(myInfo: Post) {
     this.http.post('https://ng-http-2b26c.firebaseio.com/myinfo.json', myInfo)
       .subscribe(resData => {
@@ -37,7 +39,7 @@ export class InfoComponent implements OnInit {
           return data;
         }))
         .subscribe(resData => {
-          console.log(resData);
+          this.loadedPost = resData;
         });
   }
   ngOnInit() {
