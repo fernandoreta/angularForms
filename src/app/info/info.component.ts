@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-info',
@@ -20,9 +21,22 @@ export class InfoComponent implements OnInit {
 
   private getFetch() {
     this.http.get('https://ng-http-2b26c.firebaseio.com/myinfo.json')
-      .subscribe(resData => {
-        console.log(resData);
-      });
+      .pipe(
+        map(responseData => {
+          const data = [];
+          for (const key in responseData) {
+            if (responseData.hasOwnProperty(key)) {
+              // {...responseData[key], id: key}
+              // this is for add a new object
+              // the , id: key is if we want to grab all the key and delete or move
+              data.push({...responseData[key], id: key});
+            }
+          }
+          return data;
+        }))
+        .subscribe(resData => {
+          console.log(resData);
+        });
   }
   ngOnInit() {
     this.getFetch();
