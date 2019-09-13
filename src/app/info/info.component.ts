@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-info',
@@ -12,7 +13,7 @@ export class InfoComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  submitForm(myInfo: {title: string, content: string}) {
+  submitForm(myInfo: Post) {
     this.http.post('https://ng-http-2b26c.firebaseio.com/myinfo.json', myInfo)
       .subscribe(resData => {
         console.log(resData);
@@ -20,10 +21,11 @@ export class InfoComponent implements OnInit {
   }
 
   private getFetch() {
-    this.http.get('https://ng-http-2b26c.firebaseio.com/myinfo.json')
+    this.http.get<{ [key: string ]: Post }>(
+      'https://ng-http-2b26c.firebaseio.com/myinfo.json')
       .pipe(
         map(responseData => {
-          const data = [];
+          const data: Post[] = [];
           for (const key in responseData) {
             if (responseData.hasOwnProperty(key)) {
               // {...responseData[key], id: key}
