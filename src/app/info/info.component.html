@@ -28,8 +28,8 @@
       <h3 *ngIf="loadedPost.length < 1">No content already</h3>
       <ul class="list-group" *ngIf="loadedPost.length >= 1">
         <li class="list-group-item" *ngFor="let item of loadedPost">
-          {{ item.title }}
-          {{ item.content }}
+          <h1>{{ item.title }}</h1>
+          <p>{{ item.content }}</p>
         </li>
       </ul>
     </div>
