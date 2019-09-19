@@ -14,6 +14,7 @@ export class InfoComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   loadedPost: Post[] = [];
+  isLoading = false;
 
   submitForm(myInfo: Post) {
     this.http.post('https://ng-http-2b26c.firebaseio.com/myinfo.json', myInfo)
@@ -23,6 +24,7 @@ export class InfoComponent implements OnInit {
   }
 
   private getFetch() {
+    this.isLoading = true;
     this.http.get<{ [key: string ]: Post }>(
       'https://ng-http-2b26c.firebaseio.com/myinfo.json')
       .pipe(
@@ -39,6 +41,8 @@ export class InfoComponent implements OnInit {
           return data;
         }))
         .subscribe(resData => {
+          this.isLoading = false;
+          console.log(resData);
           this.loadedPost = resData;
         });
   }

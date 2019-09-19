@@ -18,7 +18,8 @@
           name="content"
           ngModel
           class="form-control">
-        <button class="btn btn-primary" type="submit">Send Form</button>
+        <button class="btn btn-primary" type="submit">Send Form</button> |
+        <button class="btn btn-danger" (click)="getFetch()">Fetch Data</button>
       </form>
     </div>
   </div>
@@ -32,5 +33,6 @@
           <p>{{ item.content }}</p>
         </li>
       </ul>
+      <p *ngIf="isLoading">Loading ...</p>
     </div>
   </div>
