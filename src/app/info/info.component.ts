@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Post } from './post.model';
+import { InfoService } from './info.service';
 
 @Component({
   selector: 'app-info',
@@ -11,43 +12,28 @@ import { Post } from './post.model';
 })
 export class InfoComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private infoService: InfoService) { }
 
   loadedPost: Post[] = [];
   isLoading = false;
 
   submitForm(myInfo: Post) {
-    this.http.post('https://ng-http-2b26c.firebaseio.com/myinfo.json', myInfo)
-      .subscribe(resData => {
-        console.log(resData);
-      });
+    this.infoService.createPost(myInfo.title, myInfo.content);
   }
 
-  private getFetch() {
+  onFetchPost() {
     this.isLoading = true;
-    this.http.get<{ [key: string ]: Post }>(
-      'https://ng-http-2b26c.firebaseio.com/myinfo.json')
-      .pipe(
-        map(responseData => {
-          const data: Post[] = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              // {...responseData[key], id: key}
-              // this is for add a new object
-              // the , id: key is if we want to grab all the key and delete or move
-              data.push({...responseData[key], id: key});
-            }
-          }
-          return data;
-        }))
-        .subscribe(resData => {
-          this.isLoading = false;
-          console.log(resData);
-          this.loadedPost = resData;
-        });
+    this.infoService.fetchPost().subscribe(fetch => {
+      this.isLoading = false;
+      this.loadedPost = fetch;
+    });
   }
   ngOnInit() {
-    this.getFetch();
+    this.infoService.fetchPost().subscribe(fetch => {
+      this.isLoading = false;
+      this.loadedPost = fetch;
+    });
   }
 
 }
