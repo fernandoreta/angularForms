@@ -36,4 +36,8 @@ export class InfoService {
                 return data;
               }));
     }
+
+    clearPosts() {
+      return this.http.delete('https://ng-http-2b26c.firebaseio.com/myinfo.json');
+    }
 }

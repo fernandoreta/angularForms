@@ -19,7 +19,8 @@
           ngModel
           class="form-control">
         <button class="btn btn-primary" type="submit">Send Form</button> |
-        <button class="btn btn-danger" (click)="onFetchPost()">Fetch Data</button>
+        <button class="btn" (click)="onFetchPost()">Fetch Data</button>
+        <button class="btn btn-danger" (click)="onClearPosts()">Clear Data</button>
       </form>
     </div>
   </div>
@@ -33,6 +34,9 @@
           <p>{{ item.content }}</p>
         </li>
       </ul>
-      <p *ngIf="isLoading">Loading ...</p>
+      <p *ngIf="isLoading && !error">Loading ...</p>
+      <div class="danger alert-danger" *ngIf="error">
+        <h1>{{ error }}</h1>
+      </div>
     </div>
   </div>

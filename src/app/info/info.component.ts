@@ -17,6 +17,7 @@ export class InfoComponent implements OnInit {
 
   loadedPost: Post[] = [];
   isLoading = false;
+  error = null;
 
   submitForm(myInfo: Post) {
     this.infoService.createPost(myInfo.title, myInfo.content);
@@ -27,12 +28,22 @@ export class InfoComponent implements OnInit {
     this.infoService.fetchPost().subscribe(fetch => {
       this.isLoading = false;
       this.loadedPost = fetch;
+    }, error => {
+      this.error = error.message;
     });
   }
+
+  onClearPosts() {
+    this.infoService.clearPosts().subscribe();
+    this.loadedPost = [];
+  }
+
   ngOnInit() {
     this.infoService.fetchPost().subscribe(fetch => {
       this.isLoading = false;
       this.loadedPost = fetch;
+    }, error => {
+      this.error = error.message;
     });
   }
 
